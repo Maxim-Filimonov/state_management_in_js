@@ -13,4 +13,12 @@ function renderTodos() {
 
 $(function () {
   $("#todos").html(renderTodos());
-})
+  $("input:checkbox").click(function (e) {
+
+    if ($(e.target.parentElement).hasClass("completed")) {
+      $(e.target.parentElement).removeClass("completed");
+    } else {
+      $(e.target.parentElement).addClass("completed");
+    }
+  });;
+});
