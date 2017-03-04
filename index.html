@@ -15,6 +15,19 @@
     <input type="submit" id="show-completed" value="Show Completed" style="display: none" />
   </p>
 
+  <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDJoaJV2flbtSmEbTVGRhhUnEWqqswsse8",
+      authDomain: "sample-state-management.firebaseapp.com",
+      databaseURL: "https://sample-state-management.firebaseio.com",
+      storageBucket: "sample-state-management.appspot.com",
+      messagingSenderId: "258975818574"
+    };
+    firebase.initializeApp(config);
+
+  </script>
   <script src=" http://code.jquery.com/jquery-3.1.1.min.js " integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin=" anonymous "></script>
   <script src="index.js "></script>
