@@ -34,4 +34,15 @@ $(function () {
     htmlTodo.find("input:checkbox").click(toggleTodo);
     $("#todos").prepend(htmlTodo);
   });
+
+  $("#hide-completed").click(function (e) {
+    $(".completed").hide();
+    $("#hide-completed").hide();
+    $("#show-completed").show();
+  });
+  $("#show-completed").click(function (e) {
+    $(".completed").show();
+    $("#hide-completed").show();
+    $("#show-completed").hide();
+  });
 });
