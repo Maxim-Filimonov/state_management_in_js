@@ -6,7 +6,8 @@ var todos = [
 
 function renderTodos() {
   return todos.map(function (todo) {
-    return "<li>" + todo + "</li>";
+    var labelBegin = "<label> " + todo;
+    return labelBegin + "<input type='checkbox'/> </label>";
   });
 }
 
