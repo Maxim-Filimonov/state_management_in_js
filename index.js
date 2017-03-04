@@ -4,21 +4,34 @@ var todos = [
   "Clean the room"
 ]
 
+function renderTodo(todo) {
+  var labelBegin = "<label> " + todo;
+  return labelBegin + "<input type='checkbox'/> </label>";
+}
+
 function renderTodos() {
-  return todos.map(function (todo) {
-    var labelBegin = "<label> " + todo;
-    return labelBegin + "<input type='checkbox'/> </label>";
-  });
+  return todos.map(renderTodo);
+
+}
+function toggleTodo(e) {
+  ($(e.target.parentElement).toggleClass("completed"))
 }
 
 $(function () {
   $("#todos").html(renderTodos());
-  $("input:checkbox").click(function (e) {
+  $("input:checkbox").click(toggleTodo);;
 
-    if ($(e.target.parentElement).hasClass("completed")) {
-      $(e.target.parentElement).removeClass("completed");
-    } else {
-      $(e.target.parentElement).addClass("completed");
-    }
-  });;
+  $("#add-todo").click(function (e) {
+    var newTodo = $("#add-text").val();
+    var htmlTodo = $(renderTodo(newTodo));
+    htmlTodo.find("input:checkbox").click(toggleTodo);
+    $("#todos").append(htmlTodo);
+  });
+
+  $("#insert-todo").click(function (e) {
+    var newTodo = $("#add-text").val();
+    var htmlTodo = $(renderTodo(newTodo));
+    htmlTodo.find("input:checkbox").click(toggleTodo);
+    $("#todos").prepend(htmlTodo);
+  });
 });
