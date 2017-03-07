@@ -1,3 +1,10 @@
 .completed {
   text-decoration: line-through;
 }
+label {
+  display: block;
+  width: 140px;
+}
+input[type='checkbox'] {
+  float: right;
+}
