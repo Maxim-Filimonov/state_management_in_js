@@ -1,11 +1,15 @@
-function renderTodo(todo) {
+var state = {
+  todos: []
+};
+
+function renderTodo(todo, index) {
   var checked = "";
   var labelClass = "";
   if (todo.completed) {
     checked = "checked=checked"
     labelClass = "class='completed'"
   }
-  var labelBegin = "<li><label " + labelClass + ">" + todo.text;
+  var labelBegin = "<li id=" + index + "><label " + labelClass + ">" + todo.text;
   var deleteButton = "<input type='button' value='Deletel' class='js-delete'/>";
   return labelBegin + "<input type='checkbox' " + checked + "/> </label>" + deleteButton + "</li>";
 }
@@ -15,30 +19,34 @@ function renderTodos(todos) {
 }
 
 function removeTodo(e) {
+  var index = parseInt($(e.target).parents("li").attr("id"));
+  state.todos.splice(index, 1);
+
   $(e.target.parentElement.remove())
   save();
 }
 
 function toggleTodo(e) {
+  var index = parseInt($(e.target).parents("li").attr("id"));
+  var todo = state.todos[index];
+  todo.completed = !todo.completed;
+
   ($(e.target.parentElement).toggleClass("completed"))
   save();
 }
 
 function save() {
-  var todos = $("input:checkbox").get().map(function (chk) {
-    var completed = $(chk.parentElement).hasClass("completed");
-    var text = $(chk.parentElement).text()
-    return {
-      completed: completed,
-      text: text
-    }
-  });
-  localStorage.setItem("todos", JSON.stringify(todos))
+  localStorage.setItem("todos", JSON.stringify(state.todos));
 }
 
 function restore() {
-  var todosSaved = JSON.parse(localStorage.getItem("todos"))
-  $("#todos").html(renderTodos(todosSaved));
+  var storedTodo = localStorage.getItem("todos");
+  if (storedTodo === "undefined") {
+    storedTodo = JSON.stringify([]);
+  }
+  state.todos = JSON.parse(storedTodo);
+
+  $("#todos").html(renderTodos(state.todos));
 }
 
 $(function () {
@@ -51,6 +59,7 @@ $(function () {
       text: $("#add-text").val(),
       completed: false
     }
+    state.todos.push(newTodo);
     var htmlTodo = $(renderTodo(newTodo));
     htmlTodo.find("input:checkbox").click(toggleTodo);
     htmlTodo.find("input:button.js-delete").click(removeTodo);
