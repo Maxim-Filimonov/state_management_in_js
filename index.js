@@ -1,38 +1,64 @@
-var todos = [
-  "Buy some milk",
-  "Buy some water",
-  "Clean the room"
-]
-
 function renderTodo(todo) {
-  var labelBegin = "<label> " + todo;
-  return labelBegin + "<input type='checkbox'/> </label>";
+  var checked = "";
+  var labelClass = "";
+  if (todo.completed) {
+    checked = "checked=checked"
+    labelClass = "class='completed'"
+  }
+  var labelBegin = "<label " + labelClass + ">" + todo.text;
+  return labelBegin + "<input type='checkbox' " + checked + "/> </label>";
 }
 
-function renderTodos() {
+function renderTodos(todos) {
   return todos.map(renderTodo);
-
 }
 function toggleTodo(e) {
   ($(e.target.parentElement).toggleClass("completed"))
+  save();
+}
+
+function save() {
+  var todos = $("input:checkbox").get().map(function (chk) {
+    var completed = $(chk.parentElement).hasClass("completed");
+    var text = $(chk.parentElement).text()
+    return {
+      completed: completed,
+      text: text
+    }
+  });
+  localStorage.setItem("todos", JSON.stringify(todos))
+}
+
+function restore() {
+  var todosSaved = JSON.parse(localStorage.getItem("todos"))
+  $("#todos").html(renderTodos(todosSaved));
 }
 
 $(function () {
-  $("#todos").html(renderTodos());
+  restore();
   $("input:checkbox").click(toggleTodo);;
 
   $("#add-todo").click(function (e) {
-    var newTodo = $("#add-text").val();
+    var newTodo = {
+      text: $("#add-text").val(),
+      completed: false
+    }
     var htmlTodo = $(renderTodo(newTodo));
     htmlTodo.find("input:checkbox").click(toggleTodo);
     $("#todos").append(htmlTodo);
+    save();
   });
 
   $("#insert-todo").click(function (e) {
-    var newTodo = $("#add-text").val();
+    var newTodo = {
+      text: $("#add-text").val(),
+      completed: false
+    }
+
     var htmlTodo = $(renderTodo(newTodo));
     htmlTodo.find("input:checkbox").click(toggleTodo);
     $("#todos").prepend(htmlTodo);
+    save();
   });
 
   $("#hide-completed").click(function (e) {
