@@ -15,28 +15,43 @@ function renderTodo(todo, index) {
 }
 
 function renderTodos(todos) {
-  return todos.map(renderTodo);
+  return todos.map(renderTodo).join("");
 }
 
-function removeTodo(e) {
+// create - take some db and render it on the page
+// UPDATE - state changes -- update dom tree
+/// DELETE - element remove from the state - remove the representation of that element tree
+
+// state -> user interface
+
+function deleteTodo(e) {
   var index = parseInt($(e.target).parents("li").attr("id"));
+
   state.todos.splice(index, 1);
 
-  $(e.target.parentElement.remove())
   save();
+  render(state);
 }
 
 function toggleTodo(e) {
   var index = parseInt($(e.target).parents("li").attr("id"));
+
   var todo = state.todos[index];
   todo.completed = !todo.completed;
 
-  ($(e.target.parentElement).toggleClass("completed"))
+  render(state);
   save();
 }
 
 function save() {
   localStorage.setItem("todos", JSON.stringify(state.todos));
+}
+
+function render(state) {
+  var htmlTodo = $(renderTodos(state.todos));
+  htmlTodo.find("input:checkbox").click(toggleTodo);
+  htmlTodo.find("input:button.js-delete").click(deleteTodo);
+  $("#todos").html(htmlTodo);
 }
 
 function restore() {
@@ -46,39 +61,39 @@ function restore() {
   }
   state.todos = JSON.parse(storedTodo);
 
-  $("#todos").html(renderTodos(state.todos));
+  render(state);
 }
 
 $(function () {
   restore();
-  $("input:checkbox").click(toggleTodo);
-  $("input:button.js-delete").click(removeTodo);
 
   $("#add-todo").click(function (e) {
+    // Get the input from dom
     var newTodo = {
       text: $("#add-text").val(),
       completed: false
     }
-    state.todos.push(newTodo);
-    var htmlTodo = $(renderTodo(newTodo));
-    htmlTodo.find("input:checkbox").click(toggleTodo);
-    htmlTodo.find("input:button.js-delete").click(removeTodo);
 
-    $("#todos").append(htmlTodo);
+    // Modify the state
+    state.todos.push(newTodo);
+
+    // render
+    render(state)
     save();
   });
 
   $("#insert-todo").click(function (e) {
+    // Get the input from dom
     var newTodo = {
       text: $("#add-text").val(),
       completed: false
     }
 
-    var htmlTodo = $(renderTodo(newTodo));
-    htmlTodo.find("input:checkbox").click(toggleTodo);
-    htmlTodo.find("input:button.js-delete").click(removeTodo);
+    // Modify the state
+    state.todos.splice(0, 0, newTodo);
 
-    $("#todos").prepend(htmlTodo);
+    // render
+    render(state)
     save();
   });
 
@@ -93,3 +108,18 @@ $(function () {
     $("#show-completed").hide();
   });
 });
+
+
+// function test() {
+//   addTodo("Buy milk")
+//   addTodo("Another")
+//   completed("Buy Milk")
+//   var completed = function (x) {
+//     return x.completed;
+//   }
+//   if (state.todos.filter(completed) === 1) {
+//     console.log("TEST PASSED");
+//   } else {
+//     console.log("TEST FAILED");
+//   }
+// }
