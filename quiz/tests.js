@@ -82,12 +82,12 @@ function testSelectWithoverallResults() {
   testState = nextQuestion(testState)
   testState = select(testState, 0);
   var answers = overallResults(testState);
-  var answeroverallResults = answers.map(function (answer) {
+  var answerResults = answers.map(function (answer) {
     return answer.result;
   })
 
-  assertEqual(answeroverallResults[0], true);
-  assertEqual(answeroverallResults[1], false);
+  assertEqual(answerResults[0], true);
+  assertEqual(answerResults[1], false);
 }
 
 function test() {
