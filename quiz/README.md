@@ -16,3 +16,7 @@ So that I can test my knowledge
 As a user
 I want to see the result of my choice
 So that I can learn from my mistakes instantly
+
+As a user
+I want to be able to proceed to the next question
+So that I can test me knowledge deeply

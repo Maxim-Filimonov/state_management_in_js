@@ -24,11 +24,11 @@ function welcome(state) {
 }
 
 function nextQuestion(state) {
-  // if (state.currentQuestionIndex) {
-  //   state.currentQuestionIndex++;
-  // } else {
-  state.currentQuestionIndex = 0;
-  // }
+  if (state.currentQuestionIndex !== undefined) {
+    state.currentQuestionIndex++;
+  } else {
+    state.currentQuestionIndex = 0;
+  }
   return state;
 }
 
@@ -102,11 +102,26 @@ function testSelect() {
     console.error("FAIL");
   }
 }
+function testNextQuestion() {
+  var testState = {
+    currentQuestionIndex: 0,
+    questions: [{ title: 'How much?' }, { title: "Why?" }]
+  };
+  var changedState = nextQuestion(testState);
+  var actual = changedState.currentQuestionIndex;
+  var expected = 1;
+  if (actual == expected) {
+    console.log("PASS");
+  } else {
+    console.error("FAIL");
+  }
+}
 
 function test() {
   testStartWithInitial();
   stateFunctionsTests();
   testSelect();
+  testNextQuestion();
 }
 
 // ** HACKY PART **
