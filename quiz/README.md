@@ -20,3 +20,7 @@ So that I can learn from my mistakes instantly
 As a user
 I want to be able to proceed to the next question
 So that I can test me knowledge deeply
+
+As a user
+I want to be able to restart the quiz
+So that I can have another chance

@@ -5,6 +5,11 @@ var initialState = {
       title: 'What is javascript closujre?',
       choices: ["It's magic", 'the combination of a function and the lexical environment within which that function was declared.'],
       correctChoiceIndex: 1
+    },
+    {
+      title: 'What is variable hoisting?',
+      choices: ["the variable declaration is moved to the top of the scope where it is declared.", 'dunno'],
+      correctChoiceIndex: 0
     }
   ],
   welcomeMessage: 'Hi, Welcome to Get To Know JavaScript Quiz',
@@ -33,6 +38,7 @@ function nextQuestion(state) {
 }
 
 function start(state) {
+  state.currentQuestionIndex = undefined;
   return nextQuestion(state);
 }
 function select(state, choiceIndex) {
