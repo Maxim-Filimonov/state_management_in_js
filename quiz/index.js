@@ -19,6 +19,9 @@ var stateFunctions = {
   currentQuestion: function () {
     return this.questions[this.currentQuestionIndex];
   },
+  currentQuestionAnswer: function () {
+    return this.answers[this.currentQuestionIndex];
+  },
   extend: function (state) {
     return Object.assign(state, stateFunctions);
   }
@@ -42,7 +45,16 @@ function start(state) {
   return nextQuestion(state);
 }
 function select(state, choiceIndex) {
-  return state.currentQuestion().correctChoiceIndex === choiceIndex;
+  if (state.answers === undefined) {
+    state.answers = [];
+  }
+  var answer = state.currentQuestion().correctChoiceIndex === choiceIndex;
+  state.answers[state.currentQuestionIndex] = { result: answer }
+  return state;
+}
+
+function overallResults(state) {
+  return state.answers;
 }
 
 // ** HACKY PART **

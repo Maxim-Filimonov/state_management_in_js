@@ -24,3 +24,7 @@ So that I can test me knowledge deeply
 As a user
 I want to be able to restart the quiz
 So that I can have another chance
+
+As a user
+I want to see how i did overall
+So that I can get a good overview of my knowledge

@@ -41,10 +41,10 @@ function testSelect() {
   stateFunctions.extend(testState);
 
   var result = select(testState, 0);
-  assertEqual(result, true);
+  assertEqual(testState.currentQuestionAnswer().result, true);
 
   var result = select(testState, 1);
-  assertEqual(result, false);
+  assertEqual(testState.currentQuestionAnswer().result, false);
 }
 function testNextQuestion() {
   var testState = {
@@ -57,6 +57,38 @@ function testNextQuestion() {
 
   assertEqual(actual, expected);
 }
+function testoverallResults() {
+  var testState = {
+    answers: [
+      {
+        result: true
+      },
+      {
+        result: false
+      }]
+  }
+
+  var result = overallResults(testState);
+  assertEqual(result, testState.answers);
+}
+
+function testSelectWithoverallResults() {
+  var testState = {
+    questions: [{ correctChoiceIndex: 0 }, { correctChoiceIndex: 1 }]
+  }
+  stateFunctions.extend(testState);
+  testState = start(testState);
+  testState = select(testState, 0);
+  testState = nextQuestion(testState)
+  testState = select(testState, 0);
+  var answers = overallResults(testState);
+  var answeroverallResults = answers.map(function (answer) {
+    return answer.result;
+  })
+
+  assertEqual(answeroverallResults[0], true);
+  assertEqual(answeroverallResults[1], false);
+}
 
 function test() {
   testStartWithInitial();
@@ -64,6 +96,8 @@ function test() {
   testSelect();
   testNextQuestion();
   testStartAgain();
+  testoverallResults();
+  testSelectWithoverallResults();
 }
 
 /*** Test Helpers ***/
@@ -71,6 +105,6 @@ function assertEqual(actual, expected) {
   if (actual === expected) {
     console.log("PASS");
   } else {
-    console.error("FAIL", arguments.callee.caller.name);
+    console.error("FAIL:", arguments.callee.caller.name, actual, expected);
   }
 }
