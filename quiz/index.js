@@ -5,9 +5,11 @@ function renderQuestion(question) {
 function renderQuestions(questions) {
   return questions.map(renderQuestion);
 }
+function renderInto(selector, renderFunc) {
+  document.querySelector(selector).innerHTML = renderFunc();
+}
 function render() {
-  $("#welcome").html(welcome(state))
-  // $(".questions").html(renderQuestions(state.questions));
+  renderInto("#welcome", function () { return welcome(state); });
 }
 // ** HACKY PART **
 var state = stateFunctions.extend(initialState);
