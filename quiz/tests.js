@@ -90,6 +90,18 @@ function testSelectWithoverallResults() {
   assertEqual(answerResults[1], false);
 }
 
+function testIsStarted() {
+  var testState = {
+    questions: [{ correctChoiceIndex: 0 }, { correctChoiceIndex: 1 }]
+  }
+  stateFunctions.extend(testState);
+
+  assertEqual(testState.isStarted(), false, "quiz should not be started by default");
+
+  start(testState);
+  assertEqual(testState.isStarted(), true, "quiz should be started after the start");
+}
+
 function test() {
   testStartWithInitial();
   stateFunctionsTests();
@@ -98,13 +110,17 @@ function test() {
   testStartAgain();
   testoverallResults();
   testSelectWithoverallResults();
+  testIsStarted()
 }
 
 /*** Test Helpers ***/
-function assertEqual(actual, expected) {
+function assertEqual(actual, expected, message) {
   if (actual === expected) {
     console.log("PASS");
   } else {
-    console.error("FAIL:", arguments.callee.caller.name, actual, expected);
+    if (message === undefined) {
+      message = "";
+    }
+    console.error("FAIL:" + message, arguments.callee.caller.name, actual, expected);
   }
 }

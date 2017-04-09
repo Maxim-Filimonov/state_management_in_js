@@ -22,6 +22,9 @@ var stateFunctions = {
   currentQuestionAnswer: function () {
     return this.answers[this.currentQuestionIndex];
   },
+  isStarted: function () {
+    return this.currentQuestionIndex !== undefined;
+  },
   extend: function (state) {
     return Object.assign(state, stateFunctions);
   }
