@@ -11,7 +11,7 @@ So that I know what the quiz is about
 
 As a user
 I want to start the quiz
-So that I can test my knowledge
+So that I can prepare before I do the quiz
 
 As a user
 I want to see the result of my choice
@@ -19,7 +19,7 @@ So that I can learn from my mistakes instantly
 
 As a user
 I want to be able to proceed to the next question
-So that I can test me knowledge deeply
+So that I can test mine knowledge deeply
 
 As a user
 I want to be able to restart the quiz
