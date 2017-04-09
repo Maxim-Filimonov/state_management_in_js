@@ -10,6 +10,7 @@ function renderQuestions(questions) {
 function renderWelcome() {
   return welcome(state);
 }
+/*********** CLEAN THIS UP BEFORE GOING FORWARD **********/
 function renderActions() {
   if (!state.isStarted()) {
     return {
